@@ -45,12 +45,18 @@ app.use((req,res,next)=>{
     res.status(404).json({msg:'NO ROUTS MATCH WITH THIS'});
 });
 
+const initApp = require('./Adit/InitApp');
+
 sequelize.authenticate()
 .then(()=>{
-    sequelize.sync({force: true})
-    // sequelize.sync()
+    // sequelize.sync({force: true})
+    sequelize.sync()
     .then(()=>{
-        initAdmin(()=>{ app.listen(appPort);console.log('APP IS RUNNING ON URL: http://localhost:'+appPort+'/');});
+        return initApp;
+    })
+    .then(msg=>{
+        console.log(msg);
+        app.listen(appPort);console.log('APP IS RUNNING ON URL: http://localhost:'+appPort+'/');
     }).catch(err=>{
         console.log('ERROR IN DB SEQUELIZE CONNECTION WITH SYNC');
     })
