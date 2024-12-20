@@ -10,7 +10,7 @@ const profileImgDisk = require('./config/File').profileImgDisk;
 const authRoutes = require('./Routes/Auth');
 const userRoutes = require('./Routes/User');
 const notficationRoutes = require('./Routes/Notfication');
-const initAdmin=  require('./Adit/initialization');
+const initApp = require('./Adit/InitApp');
 const userNotfication = require('./Routes/UserNotfication');
 const auth = require('./Controllers/AuthController').auth;
 const isAdmin = require('./Controllers/AuthController').isAdmin;
@@ -45,7 +45,6 @@ app.use((req,res,next)=>{
     res.status(404).json({msg:'NO ROUTS MATCH WITH THIS'});
 });
 
-const initApp = require('./Adit/InitApp');
 
 sequelize.authenticate()
 .then(()=>{
@@ -55,7 +54,6 @@ sequelize.authenticate()
         return initApp;
     })
     .then(msg=>{
-        console.log(msg);
         app.listen(appPort);console.log('APP IS RUNNING ON URL: http://localhost:'+appPort+'/');
     }).catch(err=>{
         console.log('ERROR IN DB SEQUELIZE CONNECTION WITH SYNC');
